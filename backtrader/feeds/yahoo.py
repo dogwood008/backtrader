@@ -33,6 +33,7 @@ import backtrader as bt
 from .. import feed
 from ..utils import date2num
 
+import re
 
 class YahooFinanceCSVData(feed.CSVDataBase):
     '''
@@ -125,7 +126,9 @@ class YahooFinanceCSVData(feed.CSVDataBase):
         i = itertools.count(0)
 
         dttxt = linetokens[next(i)]
-        dt = date(int(dttxt[0:4]), int(dttxt[5:7]), int(dttxt[8:10]))
+        separator = re.findall('[^0-9]' , dttxt)[0]
+        date_ymd_list = [int(str) for str in dttxt.split(separator)]
+        dt = date(date_ymd_list[0], date_ymd_list[1], date_ymd_list[2])
         dtnum = date2num(datetime.combine(dt, self.p.sessionend))
 
         self.lines.datetime[0] = dtnum
