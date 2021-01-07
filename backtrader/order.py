@@ -367,6 +367,8 @@ class OrderBase(with_metaclass(MetaParams, object)):
             else:  # assume float
                 valid = self.data.datetime[0] + self.valid
 
+            self.valid = self.data.date2num(valid)
+
         if not self.p.simulated:
             # provisional end-of-session
             # get next session end
