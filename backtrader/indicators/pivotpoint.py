@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ from . import Indicator, CmpEx
 class PivotPoint(Indicator):
     '''
     Defines a level of significance by taking into account the average of price
-    bar componentes of the past period of a larget timeframe. For example when
+    bar components of the past period of a larger timeframe. For example when
     operating with days, the values are taking from the already "past" month
     fixed prices.
 
@@ -106,7 +106,7 @@ class PivotPoint(Indicator):
 class FibonacciPivotPoint(Indicator):
     '''
     Defines a level of significance by taking into account the average of price
-    bar componentes of the past period of a larget timeframe. For example when
+    bar components of the past period of a larger timeframe. For example when
     operating with days, the values are taking from the already "past" month
     fixed prices.
 
@@ -135,11 +135,11 @@ class FibonacciPivotPoint(Indicator):
     Formula:
       - pivot = (h + l + c) / 3  # variants duplicate close or add open
       - support1 = p - level1 * (high - low)  # level1 0.382
-      - support2 = p - level2 * (high - low)  # level1 0.618
-      - support2 = p - level3 * (high - low)  # level1 1.000
+      - support2 = p - level2 * (high - low)  # level2 0.618
+      - support3 = p - level3 * (high - low)  # level3 1.000
       - resistance1 = p + level1 * (high - low)  # level1 0.382
-      - resistance2 = p + level2 * (high - low)  # level1 0.618
-      - resistance2 = p + level3 * (high - low)  # level1 1.000
+      - resistance2 = p + level2 * (high - low)  # level2 0.618
+      - resistance3 = p + level3 * (high - low)  # level3 1.000
 
     See:
       - http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:pivot_points
@@ -192,7 +192,7 @@ class FibonacciPivotPoint(Indicator):
 class DemarkPivotPoint(Indicator):
     '''
     Defines a level of significance by taking into account the average of price
-    bar componentes of the past period of a larget timeframe. For example when
+    bar components of the past period of a larger timeframe. For example when
     operating with days, the values are taking from the already "past" month
     fixed prices.
 

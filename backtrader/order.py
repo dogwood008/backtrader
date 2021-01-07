@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ from .utils import AutoOrderedDict
 
 class OrderExecutionBit(object):
     '''
-    Intended to hold information about order exeuction. A "bit" does not
+    Intended to hold information about order execution. A "bit" does not
     determine if the order has been fully/partially executed, it just holds
     information.
 
@@ -214,8 +214,8 @@ class OrderData(object):
         self.p1, self.p2 = self.p2, len(self.exbits)
 
     def clone(self):
+        self.markpending()
         obj = copy(self)
-        obj.markpending()
         return obj
 
 

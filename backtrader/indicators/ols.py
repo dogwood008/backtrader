@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,13 +43,15 @@ class OLS_Slope_InterceptN(PeriodN):
         ('statsmodels.api', 'sm'),
     )
     lines = ('slope', 'intercept',)
-    params = (('period', 10),)
+    params = (
+        ('period', 10),
+    )
 
     def next(self):
         p0 = pd.Series(self.data0.get(size=self.p.period))
         p1 = pd.Series(self.data1.get(size=self.p.period))
-        p1 = sm.add_constant(p1, prepend=True)
-        slope, intercept = sm.OLS(p0, p1).fit().params
+        p1 = sm.add_constant(p1)
+        intercept, slope = sm.OLS(p0, p1).fit().params
 
         self.lines.slope[0] = slope
         self.lines.intercept[0] = intercept
@@ -116,11 +118,11 @@ class CointN(PeriodN):
     lines = ('score', 'pvalue',)
     params = (
         ('period', 10),
-        ('regression', 'c'),  # see statsmodel.tsa.statttools
+        ('trend', 'c'),  # see statsmodel.tsa.statttools
     )
 
     def next(self):
         x, y = (pd.Series(d.get(size=self.p.period)) for d in self.datas)
-        score, pvalue, _ = coint(x, y, regression=self.p.regression)
+        score, pvalue, _ = coint(x, y, trend=self.p.trend)
         self.lines.score[0] = score
         self.lines.pvalue[0] = pvalue

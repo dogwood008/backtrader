@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ from .brokers import BackBroker
 from .metabase import MetaParams
 from . import observers
 from .writer import WriterFile
-from .utils import OrderedDict, tzparse, num2date
+from .utils import OrderedDict, tzparse, num2date, date2num
 from .strategy import Strategy, SignalStrategy
 from .tradingcal import (TradingCalendarBase, TradingCalendar,
                          PandasMarketCalendar)
@@ -443,7 +443,7 @@ class Cerebro(with_metaclass(MetaParams, object)):
                   weekdays=[], weekcarry=False,
                   monthdays=[], monthcarry=True,
                   allow=None,
-                  tzdata=None, cheat=False,
+                  tzdata=None, strats=False, cheat=False,
                   *args, **kwargs):
         '''
         Schedules a timer to invoke ``notify_timer``
@@ -934,7 +934,6 @@ class Cerebro(with_metaclass(MetaParams, object)):
     broker = property(getbroker, setbroker)
 
     def plot(self, plotter=None, numfigs=1, iplot=True, start=None, end=None,
-             savefig=False, figfilename='backtrader-plot-{j}-{i}.png',
              width=16, height=9, dpi=300, tight=True, use=None,
              **kwargs):
         '''
@@ -959,13 +958,6 @@ class Cerebro(with_metaclass(MetaParams, object)):
         ``end``: An index to the datetime line array of the strategy or a
         ``datetime.date``, ``datetime.datetime`` instance indicating the end
         of the plot
-
-        ``savefig``: set to ``True`` to save to a file rather than plot
-
-        ``figfilename``: name of the file. Use ``{j}`` in the name for the
-        strategy index to which the figure corresponds and use ``{i}`` to
-        insert figure number if multiple figures are being used per strategy
-        plot
 
         ``width``: in inches of the saved figure
 
@@ -1001,15 +993,8 @@ class Cerebro(with_metaclass(MetaParams, object)):
 
                 figs.append(rfig)
 
-            if savefig:
-                for j, stratfigs in enumerate(figs):
-                    for i, fig in enumerate(stratfigs):
-                        plotter.savefig(fig,
-                                        filename=figfilename.format(j=j, i=i),
-                                        width=width, height=height, dpi=dpi,
-                                        tight=tight)
-            else:
-                plotter.show()
+            plotter.show()
+
         return figs
 
     def __call__(self, iterstrat):
@@ -1141,6 +1126,9 @@ class Cerebro(with_metaclass(MetaParams, object)):
             for iterstrat in iterstrats:
                 runstrat = self.runstrategies(iterstrat)
                 self.runstrats.append(runstrat)
+                if self._dooptimize:
+                    for cb in self.optcbs:
+                        cb(runstrat)  # callback receives finished strategy
         else:
             if self.p.optdatas and self._dopreload and self._dorunonce:
                 for data in self.datas:
@@ -1337,7 +1325,7 @@ class Cerebro(with_metaclass(MetaParams, object)):
                         if attrname.startswith('data'):
                             setattr(a, attrname, None)
 
-                oreturn = OptReturn(strat.params, analyzers=strat.analyzers)
+                oreturn = OptReturn(strat.params, analyzers=strat.analyzers, strategycls=type(strat))
                 results.append(oreturn)
 
             return results
@@ -1524,6 +1512,7 @@ class Cerebro(with_metaclass(MetaParams, object)):
         ldatas = len(datas)
         ldatas_noclones = ldatas - clonecount
         lastqcheck = False
+        dt0 = date2num(datetime.datetime.max) - 2  # default at max
         while d0ret or d0ret is None:
             # if any has live data in the buffer, no data will wait anything
             newqcheck = not any(d.haslivedata() for d in datas)

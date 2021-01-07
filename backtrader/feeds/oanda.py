@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -122,9 +122,9 @@ class OandaData(with_metaclass(MetaOandaData, DataBase)):
         (TimeFrame.Minutes, 3): 'M3',
         (TimeFrame.Minutes, 4): 'M4',
         (TimeFrame.Minutes, 5): 'M5',
-        (TimeFrame.Minutes, 10): 'M5',
-        (TimeFrame.Minutes, 15): 'M5',
-        (TimeFrame.Minutes, 30): 'M5',
+        (TimeFrame.Minutes, 10): 'M10',
+        (TimeFrame.Minutes, 15): 'M15',
+        (TimeFrame.Minutes, 30): 'M30',
         (TimeFrame.Minutes, 60): 'H1',
         (TimeFrame.Minutes, 120): 'H2',
         (TimeFrame.Minutes, 180): 'H3',

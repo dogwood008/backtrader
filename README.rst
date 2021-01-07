@@ -1,4 +1,3 @@
-
 backtrader
 ==========
 
@@ -15,11 +14,11 @@ backtrader
 .. image:: https://img.shields.io/pypi/l/backtrader.svg
    :alt: License
    :scale: 100%
-   :target: https://github.com/mementum/backtrader/blob/master/LICENSE
-.. image:: https://travis-ci.org/mementum/backtrader.png?branch=master
+   :target: https://github.com/backtrader/backtrader/blob/master/LICENSE
+.. image:: https://travis-ci.org/backtrader/backtrader.png?branch=master
    :alt: Travis-ci Build Status
    :scale: 100%
-   :target: https://travis-ci.org/mementum/backtrader
+   :target: https://travis-ci.org/backtrader/backtrader
 .. image:: https://img.shields.io/pypi/pyversions/backtrader.svg
    :alt: Python versions
    :scale: 100%
@@ -27,11 +26,15 @@ backtrader
 
 **Yahoo API Note**:
 
-  With release ``1.9.50.117`` data samples and YahooFinance data feeds have
-  been updated to the latest available information. But being the format not
-  documented, there could still be changes and unexpected corners.
+  [2018-11-16] After some testing it would seem that data downloads can be
+  again relied upon over the web interface (or API ``v7``)
 
-For **feedback/questions/issues** use the `Community <https://community.backtrader.com>`_
+**Tickets**
+
+  The ticket system is (was, actually) more often than not abused to ask for
+  advice about samples.
+
+For **feedback/questions/...** use the `Community <https://community.backtrader.com>`_
 
 Here a snippet of a Simple Moving Average CrossOver. It can be done in several
 different ways. Use the docs (and examples) Luke!
@@ -49,7 +52,7 @@ different ways. Use the docs (and examples) Luke!
   cerebro = bt.Cerebro()
   cerebro.addstrategy(SmaCross)
 
-  data0 = bt.feeds.YahooFinanceData(dataname='YHOO', fromdate=datetime(2011, 1, 1),
+  data0 = bt.feeds.YahooFinanceData(dataname='MSFT', fromdate=datetime(2011, 1, 1),
                                     todate=datetime(2012, 12, 31))
   cerebro.adddata(data0)
 
@@ -75,7 +78,8 @@ Live Trading and backtesting platform written in Python.
       streaming when implemented)
 
   - Data feeds from csv/files, online sources or from *pandas* and *blaze*
-  - Filters for datas (like breaking a daily bar into chunks to simulate intraday)
+  - Filters for datas, like breaking a daily bar into chunks to simulate
+    intraday or working with Renko bricks
   - Multiple data feeds and multiple strategies supported
   - Multiple timeframes at once
   - Integrated Resampling and Replaying
@@ -84,11 +88,16 @@ Live Trading and backtesting platform written in Python.
   - *TA-Lib* indicator support (needs python *ta-lib* / check the docs)
   - Easy development of custom indicators
   - Analyzers (for example: TimeReturn, Sharpe Ratio, SQN) and ``pyfolio``
-    integration
+    integration (**deprecated**)
   - Flexible definition of commission schemes
   - Integrated broker simulation with *Market*, *Close*, *Limit*, *Stop*,
-    *StopLimit*, *StopTrail*, *StopTrailLimit*and *OCO*, orders, slippage and
-    continuous cash adjustmet for future-like instruments
+    *StopLimit*, *StopTrail*, *StopTrailLimit*and *OCO* orders, bracket order,
+    slippage, volume filling strategies and continuous cash adjustmet for
+    future-like instruments
+  - Sizers for automated staking
+  - Cheat-on-Close and Cheat-on-Open modes
+  - Schedulers
+  - Trading Calendars
   - Plotting (requires matplotlib)
 
 Documentation
@@ -102,22 +111,17 @@ Read the full documentation at:
 
   - `Documentation <http://www.backtrader.com/docu>`_
 
-List of built-in Indicators (116)
+List of built-in Indicators (122)
 
   - `Indicators Reference <http://www.backtrader.com/docu/indautoref.html>`_
 
 Python 2/3 Support
 ==================
 
-  - Python ``2.7``
-  - Python ``3.2`` / ``3.3``/ ``3.4`` / ``3.5`` / ``3.6``
+  - Python >= ``3.2``
 
   - It also works with ``pypy`` and ``pypy3`` (no plotting - ``matplotlib`` is
     not supported under *pypy*)
-
-Compatibility is tested during development with ``2.7`` and ``3.5``
-
-The other versions are tested automatically with *Travis*.
 
 Installation
 ============
@@ -158,45 +162,9 @@ Version numbering
 X.Y.Z.I
 
   - X: Major version number. Should stay stable unless something big is changed
-    like an overhaul to use numpy
+    like an overhaul to use ``numpy``
   - Y: Minor version number. To be changed upon adding a complete new feature or
     (god forbids) an incompatible API change.
   - Z: Revision version number. To be changed for documentation updates, small
     changes, small bug fixes
   - I: Number of Indicators already built into the platform
-
-Alternatives
-============
-
-If after seeing the docs and some samples (see the blog also) you feel this is
-not your cup of tea, you can always have a look at similar Python platforms:
-
-  - `PyAlgoTrade <https://github.com/gbeced/pyalgotrade>`_
-  - `Zipline <https://github.com/quantopian/zipline>`_
-  - `Ultra-Finance <https://code.google.com/p/ultra-finance/>`_
-  - `ProfitPy <https://code.google.com/p/profitpy/>`_
-  - `pybacktest <https://github.com/ematvey/pybacktest>`_
-  - `prophet <https://github.com/Emsu/prophet>`_
-  - `quant <https://github.com/maihde/quant>`_
-  - `AlephNull <https://github.com/CarterBain/AlephNull>`_
-  - `Trading with Python <http://www.tradingwithpython.com/>`_
-  - `visualize-wealth <https://github.com/benjaminmgross/visualize-wealth>`_
-  - `tia: Toolkit for integration and analysis
-    <https://github.com/bpsmith/tia>`_
-  - `QuantSoftware Toolkit
-    <http://wiki.quantsoftware.org/index.php?title=QuantSoftware_ToolKit>`_
-  - `Pinkfish <http://fja05680.github.io/pinkfish/>`_
-  - `bt <http://pmorissette.github.io/bt/index.html>`_
-
-     ``bt`` slightly pre-dates ``backtrader`` and has a completely different
-     approach but it is funny *bt* was also chosen as the abbreviation for
-     ``backtrader`` during imports and that some of the methods have the same
-     naming (obvious naming anyhow): ``run``, ``plot`` ...
-
-  - `PyThalesians <https://github.com/thalesians/pythalesians>`_
-
-  - `QSTrader <https://github.com/mhallsmoore/qstrader/>`_
-  - `QSForex <https://github.com/mhallsmoore/qsforex>`_
-  - `pysystemtrade <https://github.com/robcarver17/pysystemtrade>`_
-  - `QTPyLib <https://github.com/ranaroussi/qtpylib>`_
-  - `RQalpha <https://github.com/ricequant/rqalpha>`_

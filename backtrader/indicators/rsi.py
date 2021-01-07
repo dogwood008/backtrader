@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ class UpDay(Indicator):
     Defined by J. Welles Wilder, Jr. in 1978 in his book *"New Concepts in
     Technical Trading Systems"* for the RSI
 
-    Recods days which have been "up", i.e.: the close price has been
+    Records days which have been "up", i.e.: the close price has been
     higher than the day before.
 
     Formula:
@@ -52,7 +52,7 @@ class DownDay(Indicator):
     Defined by J. Welles Wilder, Jr. in 1978 in his book *"New Concepts in
     Technical Trading Systems"* for the RSI
 
-    Recods days which have been "down", i.e.: the close price has been
+    Records days which have been "down", i.e.: the close price has been
     lower than the day before.
 
     Formula:
@@ -74,7 +74,7 @@ class UpDayBool(Indicator):
     Defined by J. Welles Wilder, Jr. in 1978 in his book *"New Concepts in
     Technical Trading Systems"* for the RSI
 
-    Recods days which have been "up", i.e.: the close price has been
+    Records days which have been "up", i.e.: the close price has been
     higher than the day before.
 
     Note:
@@ -99,7 +99,7 @@ class DownDayBool(Indicator):
     Defined by J. Welles Wilder, Jr. in 1978 in his book *"New Concepts in
     Technical Trading Systems"* for the RSI
 
-    Recods days which have been "down", i.e.: the close price has been
+    Records days which have been "down", i.e.: the close price has been
     lower than the day before.
 
     Note:

@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ class Store(with_metaclass(MetaSingleton, object)):
     def getbroker(cls, *args, **kwargs):
         '''Returns broker with *args, **kwargs from registered ``BrokerCls``'''
         broker = cls.BrokerCls(*args, **kwargs)
-        broker._store = self
+        broker._store = cls
         return broker
 
     BrokerCls = None  # broker class will autoregister
@@ -76,7 +76,7 @@ class Store(with_metaclass(MetaSingleton, object)):
             self.datas.append(data)
 
             if self.broker is not None:
-                if hasattt(self.broker, 'data_started'):
+                if hasattr(self.broker, 'data_started'):
                     self.broker.data_started(data)
 
         elif broker is not None:

@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,7 +61,6 @@ class MomentumOscillator(Indicator):
     lines = ('momosc',)
 
     # Accepted parameters (and defaults) -
-    # MovAvg also parameter to allow experimentation
     params = (('period', 12),
               ('band', 100.0))
 
@@ -93,7 +92,6 @@ class RateOfChange(Indicator):
     lines = ('roc',)
 
     # Accepted parameters (and defaults) -
-    # MovAvg also parameter to allow experimentation
     params = (('period', 12),)
 
     def __init__(self):
@@ -120,10 +118,9 @@ class RateOfChange100(Indicator):
     # Named output lines
     lines = ('roc100',)
 
-    # Accepted parameters (and defaults) -
-    # MovAvg also parameter to allow experimentation
+    # Accepted parameters (and defaults)
     params = (('period', 12),)
 
     def __init__(self):
-        self.l.roc100 = 100.0 * ROC(self.data)
+        self.l.roc100 = 100.0 * ROC(self.data, period=self.p.period)
         super(RateOfChange100, self).__init__()

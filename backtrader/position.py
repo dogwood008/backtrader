@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,9 +64,6 @@ class Position(object):
         self.set(size, price)
 
         self.updt = None
-
-    def clone(self):
-        return copy(self)
 
     def fix(self, size, price):
         oldsize = self.size
@@ -144,8 +141,8 @@ class Position(object):
                price - new position price
                    If a position is increased the new average price will be
                    returned
-                   If a position is reduced the price of the reamining size
-                   does not chance
+                   If a position is reduced the price of the remaining size
+                   does not change
                    If a position is closed the price is nullified
                    If a position is reversed the price is the price given as
                    argument

@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016, 2017 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -98,6 +98,6 @@ class Transactions(bt.Analyzer):
                     entries.append([size, price, i, dname, -size * price])
 
         if entries:
-            self.rets[self.data0.datetime.datetime()] = entries
+            self.rets[self.strategy.datetime.datetime()] = entries
 
         self._positions.clear()

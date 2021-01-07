@@ -2,7 +2,7 @@
 # -*- coding: utf-8; py-indent-offset:4 -*-
 ###############################################################################
 #
-# Copyright (C) 2015, 2016 Daniel Rodriguez
+# Copyright (C) 2015-2020 Daniel Rodriguez
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,11 +28,11 @@ import backtrader.indicators as btind
 
 chkdatas = 1
 chkvals = [
-    ['30.007641', '27.610389', '-2.970748'],
-    ['18.537777', '7.352240', '22.270242']
+    ['18.966300', '33.688645', '27.643797'],
+    ['11.123593', '37.882890', '16.602624']
 ]
 
-chkmin = 30
+chkmin = 48
 chkind = bt.ind.KST
 
 
